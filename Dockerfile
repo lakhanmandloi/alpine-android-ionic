@@ -111,6 +111,6 @@ RUN npm install --unsafe-perm -g @angular/cli
 
 
 RUN npm install -g cordova@"$CORDOVA_VERSION" ionic@"$IONIC_VERSION"  && \
-    npm cache clear && \
+    npm cache clear
 
 RUN ng -v
