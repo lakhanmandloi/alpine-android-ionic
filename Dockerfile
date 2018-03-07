@@ -30,8 +30,8 @@ RUN wget http://dl.google.com/android/repository/sdk-tools-linux-${SDK_TOOLS}.zi
 RUN mkdir -p /root/.android/ && touch /root/.android/repositories.cfg && \
 	yes | ${ANDROID_HOME}/tools/bin/sdkmanager "--licenses" && \
 	${ANDROID_HOME}/tools/bin/sdkmanager "--update" && \
-	${ANDROID_HOME}/tools/bin/sdkmanager "build-tools;26.0.3" "platform-tools" "platforms;android-26” "extras;android;m2repository" "extras;google;google_play_services" "extras;google;m2repository" && \ 
-	${ANDROID_HOME}/tools/bin/sdkmanager "build-tools;27.0.3” "platform-tools" "platforms;android-27” "extras;android;m2repository" "extras;google;google_play_services" "extras;google;m2repository"
+	${ANDROID_HOME}/tools/bin/sdkmanager "build-tools;26.0.3" "platform-tools" "platforms;android-26" "extras;android;m2repository" "extras;google;google_play_services" "extras;google;m2repository" && \ 
+	${ANDROID_HOME}/tools/bin/sdkmanager "build-tools;27.0.3" "platform-tools" "platforms;android-27" "extras;android;m2repository" "extras;google;google_play_services" "extras;google;m2repository"
 
 # Install AWS-CLI
 RUN \
@@ -111,6 +111,6 @@ RUN npm install --unsafe-perm -g @angular/cli
 
 
 RUN npm install -g cordova@"$CORDOVA_VERSION" ionic@"$IONIC_VERSION"  && \
-    npm cache clear
+    npm cache clear 
 
 RUN ng -v
