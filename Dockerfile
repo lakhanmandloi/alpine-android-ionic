@@ -1,5 +1,4 @@
 FROM openjdk:8-alpine
-MAINTAINER Umesh B
 
 ENV SDK_TOOLS "3859397"
 ENV BUILD_TOOLS "26.0.3"
