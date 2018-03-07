@@ -1,3 +1,2 @@
-FROM lakhanmandloi/angular-aws
 
 
