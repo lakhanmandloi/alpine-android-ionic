@@ -5,9 +5,14 @@ ENV BUILD_TOOLS "26.0.3"
 ENV TARGET_SDK "26"
 ENV ANDROID_HOME "/opt/sdk"
 ENV GLIBC_VERSION "2.27-r0"
+ENV NODE_VERSION 8.9.4
+ENV YARN_VERSION 1.3.2
+ENV TERM=xterm 
+ENV IONIC_VERSION=2.1.14 
+ENV CORDOVA_VERSION=6.4.0
 
 # Install required dependencies
-RUN apk add --no-cache --virtual=.build-dependencies wget unzip ca-certificates bash && \
+RUN apk add --no-cache --virtual=.build-dependencies wget unzip ca-certificates bash curl git && \
 	wget https://raw.githubusercontent.com/sgerrand/alpine-pkg-glibc/master/sgerrand.rsa.pub -O /etc/apk/keys/sgerrand.rsa.pub && \
 	wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk -O /tmp/glibc.apk && \
 	wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-bin-${GLIBC_VERSION}.apk -O /tmp/glibc-bin.apk && \
@@ -38,22 +43,18 @@ RUN \
 	
 # Install NPM 
 
-ENV NODE_VERSION 8.9.4
-
 RUN addgroup -g 1000 node \
     && adduser -u 1000 -G node -s /bin/sh -D node \
     && apk add --no-cache \
         libstdc++ \
     && apk add --no-cache --virtual .build-deps \
         binutils-gold \
-        curl \
         g++ \
         gcc \
         gnupg \
         libgcc \
         linux-headers \
         make \
-        python \
   # gpg keys listed at https://github.com/nodejs/node#release-team
   && for key in \
     94AE36675C464D64BAFA68DD7434390BDBE9B9C5 \
@@ -83,9 +84,8 @@ RUN addgroup -g 1000 node \
     && rm -Rf "node-v$NODE_VERSION" \
     && rm "node-v$NODE_VERSION.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt
 
-ENV YARN_VERSION 1.3.2
 
-RUN apk add --no-cache --virtual .build-deps-yarn curl gnupg tar \
+RUN apk add --no-cache --virtual .build-deps-yarn  gnupg tar \
   && for key in \
     6A010C5166006599AA17F08146C2130DFD2497F5 \
   ; do \
@@ -107,4 +107,10 @@ CMD [ "node" ]
 
 RUN chown -R $(whoami) /usr/local/lib/node_modules
 RUN npm install --unsafe-perm -g @angular/cli
+
+
+
+RUN npm install -g cordova@"$CORDOVA_VERSION" ionic@"$IONIC_VERSION"  && \
+    npm cache clear && \
+
 RUN ng -v
