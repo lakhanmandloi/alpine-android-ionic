@@ -95,11 +95,10 @@ RUN apk add --no-cache --virtual .build-deps-yarn  gnupg tar \
 CMD [ "node" ]
 
 RUN chown -R $(whoami) /usr/local/lib/node_modules
-RUN npm install --unsafe-perm -g @angular/cli
+RUN npm install --unsafe-perm -g @angular/cli node-sass
 
 
 
-RUN npm install -g cordova@"$CORDOVA_VERSION" ionic@"$IONIC_VERSION"  && \
-    npm cache clear 
+RUN npm install -g cordova@"$CORDOVA_VERSION" ionic@"$IONIC_VERSION"  
 
 RUN ng -v
