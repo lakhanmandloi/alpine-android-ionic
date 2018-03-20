@@ -19,8 +19,6 @@ RUN mkdir -p /opt/android-sdk-linux && cd /opt \
 ENV NODE_VERSION 8.9.4
 ENV YARN_VERSION 1.3.2
 ENV TERM=xterm 
-ENV IONIC_VERSION=2.1.14 
-ENV CORDOVA_VERSION=6.4.0
 
 # Install AWS-CLI
 RUN \
@@ -94,7 +92,6 @@ RUN apk add --no-cache --virtual .build-deps-yarn  gnupg tar \
 
 CMD [ "node" ]
 
-RUN chown -R $(whoami) /usr/local/lib/node_modules
-RUN npm install --unsafe-perm -g @angular/cli node-sass
+RUN chown -R $(whoami) /usr/local/lib/node_modules 
 
-RUN npm install -g cordova@"$CORDOVA_VERSION" ionic@"$IONIC_VERSION"  
+RUN npm install --unsafe-perm -g cordova ionic @angular/cli node-sass
